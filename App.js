@@ -34,9 +34,19 @@ export default function App() {
     // setIsFocusedMail(false);
     // setIsFocusedPassword(false);
     Keyboard.dismiss();
+    // console.log("state:", state);
+    // setState(initialState);
+  };
+  //! Submit и закрытие клавиатуры
+  const keboardHideAndSubmit = () => {
+    setIsShowKeyboard(false);
+    // setIsFocusedLogin(false);
+    // setIsFocusedMail(false);
+    // setIsFocusedPassword(false);
+    Keyboard.dismiss();
     console.log("state:", state);
     setState(initialState);
-  };
+  }
 
   return (
     <TouchableWithoutFeedback onPress={keboardHide}>
@@ -82,7 +92,7 @@ export default function App() {
             <TouchableOpacity
               style={styles.btn}
               activeOpacity={0.7}
-              onPress={keboardHide}
+              onPress={keboardHideAndSubmit}
             >
               <Text style={styles.btnTitle}>SIGN IN</Text>
             </TouchableOpacity>
