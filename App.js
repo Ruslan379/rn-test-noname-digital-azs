@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { useFonts } from "expo-font";
 import {
   StyleSheet,
   Text,
@@ -26,6 +27,18 @@ export default function App() {
   //! useState
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
+
+  //! Загрузка шрифтов_NEW
+  const [fontsLoaded] = useFonts({
+    "MusticaPro": require("./assets/fonts/MusticaPro-SemiBold.otf"),
+    "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
+  });
+  //! Проверка наличия шрифтов
+  // console.log("fontsLoaded:", fontsLoaded); //!
+  if (!fontsLoaded) {
+    return null;
+  };
+
 
   //! Закрытие клавиатуры
   const keboardHide = () => {
@@ -59,13 +72,22 @@ export default function App() {
           behavior={Platform.OS === 'android' ? 'padding ' : 'height'}
         // style={styles.containerKeyboardAvoidingView}
         > */}
-          <View style={styles.innerBox}>
-            <Text style={styles.textOne}>Open up App</Text>
-            <Text style={styles.textTwo}>Open up App.js to start working on your app!</Text>
-          </View>
+          {isShowKeyboard && (
+            <View style={styles.innerBoxHidden}>
+            </View>
+          )}
+          {!isShowKeyboard && (
+            <View style={styles.innerBox}>
+              {/* <View style={{ ...styles.innerBox, display: isShowKeyboard ? "none" : "block" }}> */}
+              {/* <View style={{ ...styles.innerBox, visibility: isShowKeyboard ? "hidden" : "visible" }}> */}
+              <Text style={styles.textOne}>Open up App</Text>
+              <Text style={styles.textTwo}>Open up App.js to start working on your app!</Text>
+            </View>
+          )}
           <View style={{ ...styles.form, marginBottom: isShowKeyboard ? 20 : 200 }}
           >
-            <View style={styles.header}>
+            <View style={{ ...styles.header, marginBottom: isShowKeyboard ? 50 : 0 }}>
+              {/* <View style={styles.header}> */}
               <Text style={styles.headerTitle}>HEADER-1</Text>
               <Text style={styles.headerTitle}>HEADER-2</Text>
             </View>
@@ -120,9 +142,9 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     justifyContent: 'flex-end',
   },
-  containerKeyboardAvoidingView: {
-    flex: 1,
-  },
+  // containerKeyboardAvoidingView: {
+  //   flex: 1,
+  // },
   innerBox: {
     // flex: 1,
     alignItems: 'center',
@@ -135,7 +157,20 @@ const styles = StyleSheet.create({
     borderColor: "blue",
     borderRadius: 15,
   },
+  innerBoxHidden: {
+    // flex: 1,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    width: 350,
+    // height: 1,
+    // padding: 20,
+    // marginBottom: 10,
+    // borderWidth: 2,
+    // borderColor: "blue",
+    // borderRadius: 15,
+  },
   textOne: {
+    fontFamily: "MusticaPro",
     color: "red",
     fontSize: 30
   },
@@ -148,6 +183,7 @@ const styles = StyleSheet.create({
     // marginBottom: 100,
   },
   inputTitle: {
+    fontFamily: "MusticaPro",
     color: "darkmagenta",
     marginBottom: 5,
     fontSize: 18,
@@ -185,6 +221,8 @@ const styles = StyleSheet.create({
     }),
   },
   btnTitle: {
+    fontFamily: "MusticaPro",
+    // fontStyle: "normal",
     color: "darkolivegreen",
     fontSize: 16,
   },
